@@ -1,0 +1,156 @@
+
+/*!
+ \mainpage The Main Page
+ \section sec_1 Presentation 
+ A fuzzy logic library libfl in C language to be used in such domains as
+	- research
+	- prototyping
+	- education
+	- productions
+
+ By defining inputs, outputs variables, their own subsets which represents the domain where values operates, and by defining rules inferences to trigger outputs.
+
+it does follow an "if ... then ..." pattern to execute where rules traces flow of datas.
+
+<HR>
+
+Handling 8 types of curves for subsets definition 
+
+S , Sigmoid : #TOKEN_W_SIGMOIDE
+
+> value pass by the sigmoid function
+
+ES , EndSigmoid : #TOKEN_W_ENDSIGMOIDE
+
+> it does represent a special case of a sigmoid function where we define the start and the end of the function
+
+BS , BeginSigmoid: #TOKEN_W_BEGINSIGMOIDE
+
+> like the Endsigmoid it does represent a special case of a sigmoid function where we define the start and the end of the function
+
+G , Gaussian : #TOKEN_W_GAUSSIAN
+
+> this represent a gaussian function 
+
+TR , Triangle : #TOKEN_W_TRIANGLE
+
+> define a triangle shape
+
+TP , Trapeze : #TOKEN_W_TRAPEZE
+
+> define a trapezoidal shape
+
+P , Pshape : #TOKEN_W_PSHAPE
+
+> special case of a trapez shape
+
+TSK , Takagi Sugeno Kang : #TOKEN_W_TSK
+
+> a subset where mathematical expression are used,
+TSK subset integrate math functions available for users like :
+	- cos
+	- sin
+	- sigm
+	- gauss
+	- normalisation
+
+and can be easily extended to incorporate new features for end users.
+(describe how to)
+
+<HR>
+
+The internal structure for rules inference respect a 
+DFS (Depth first search) binary tree to evaluate result of the rules.
+
+Two operator
+	1. AND operator #TOKEN_AND => min(A,B)
+	2. OR operator #TOKEN_OR => max(A,B)
+
+where the AND operator relate to the conjonction of domains, 
+using the minimum between two values.
+ 
+The OR operator use the maximum of both domains.
+
+example below show the difference between same definition and the presence of not of parenthesis #TOKEN_OPEN_P #TOKEN_CLOSE_P to embrace expression :
+
+> if A{s1} and B{s2} or C{s3} then ...
+
+> if A{s1} and ( B{s2} or C{s3} ) then ...
+
+ \section sec_2 Usage
+
+How to write inputs, outputs variables and rules
+
+- creating In or Out variable and their own subsets
+
+1st example :
+
+> I MyVar G MySubset 1,1
+
+this create a variable as :
+
+	I 		=> to define an input
+	MyVar 		=> a name assignation
+
+where the first subset is defined as :
+
+	G 		=> type of the curve for this subset
+	MySubset	=> a name assignation
+	1,1 		=> two parameters for this type of curve 
+
+
+2nd example :
+
+> I MyVar G MySubsetA 1,1 # S MySubsetB 2,2
+
+the subset definition is separated by '#' sharp character #TOKEN_SHARP
+
+3th example :
+
+> I MyVar G MySubsetA 1,1 # G MySubsetB 2,2
+
+> I MyVar G MySubsetA 1,1 # MySubsetB 2,2
+
+those two lines are equivalent,
+
+creating two subsets of the same type for the variable called 'MyVar'
+
+as long as we let the possibility to avoid the redefinition of the subset type ( in this case type 'G' ) for the 2nd,3th.. subsets definition 
+
+they implicitely took the type which has been written by the previous one. 
+
+
+<HR>
+Example code to write:
+
+function takes as first argument a #t_fuzzylogic object
+
+- create a new variable object
+
+> #fl_variable_add(fl, "I invarA G setA 1,1 # setB 3,4");
+
+> #fl_variable_add(fl, "O outvarA G setA 1,1 # setB 3,4");
+
+- create a new rule object
+
+> #fl_rules_add(fl, "invarA{setA} : outvarA{setA}");
+
+- fuzzyfy input value
+
+> #fl_fuzzyfy_var_by_name(fl, "invarA", input_value);
+
+> #fl_fuzzyfy_var(fl , pointer_on_t_fuzzvariable_obj, input_value);
+
+- trigger the result
+
+> #fl_get_values(fl);
+
+ \section sec_3 Compiling 
+
+	1. Makefile for *nix system 
+	2. Win32Makefile for Windows - require nmake from developper command prompt
+
+ \section sec_4 Perspective 
+ Fuzzy logic library can be used to build an engine with multiple parameters and controlling output.
+It can be a functionnality integrated inside project like Cognitive Fuzzy Map
+*/
