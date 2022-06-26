@@ -14,12 +14,19 @@ By defining inputs, outputs variables, their own subsets which represents the do
 
 All files are commented through Doxygen format, run :
 
-doxygen doxyconf 
+> doxygen doxyconf 
 
-to generate documentation
+to generate documentation, 
+
+see doxyconf to configure output of doxygen
+
+and doc.dox file ( main page of explaination made by doxygen) 
 
 --
 
 Using Makefile for unix system , run :
 
-make
+> make
+
+it does generate libfl.a for a static library
+to use it, compile your own code with -lfl -lmath
